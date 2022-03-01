@@ -1,0 +1,192 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Resource Files\audio">
+      <UniqueIdentifier>{cd575115-d582-413c-a0e6-12e8c9760470}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\sprites">
+      <UniqueIdentifier>{2124b699-906f-4b9a-9a53-89c32bb20c35}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\3D">
+      <UniqueIdentifier>{dc126d50-c792-4dc4-92ba-db4b7b444980}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\3D\utils">
+      <UniqueIdentifier>{b158a1dc-e5c9-44ba-bcb7-677c29466187}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\3D\geometry">
+      <UniqueIdentifier>{3edb41ca-e3da-4818-9e6f-4b26884858cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\3D">
+      <UniqueIdentifier>{9e772452-8ea3-4a63-94c9-a6e193a047d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\3D\geometry">
+      <UniqueIdentifier>{ab270bee-3d1b-438a-95ea-6fa141d88178}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\3D\utils">
+      <UniqueIdentifier>{8c559f24-976e-4eba-9412-475b13577915}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="PlatformerClone.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="include\3D\geometry\vector3d.cpp">
+      <Filter>Source Files\3D\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="include\3D\geometry\solid3d.cpp">
+      <Filter>Source Files\3D\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="include\3D\geometry\segment3d.cpp">
+      <Filter>Source Files\3D\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="include\3D\geometry\plane3d.cpp">
+      <Filter>Source Files\3D\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="include\3D\geometry\geometry.cpp">
+      <Filter>Source Files\3D\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="include\3D\geometry\camera3d.cpp">
+      <Filter>Source Files\3D\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="include\3D\utils\tools.cpp">
+      <Filter>Source Files\3D\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="include\3D\utils\parameters.cpp">
+      <Filter>Source Files\3D\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="include\3D\utils\mouse.cpp">
+      <Filter>Source Files\3D\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="include\3D\utils\looptimer.cpp">
+      <Filter>Source Files\3D\utils</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="res\audio\bro.ogg">
+      <Filter>Resource Files\audio</Filter>
+    </None>
+    <None Include="res\audio\downClick.ogg">
+      <Filter>Resource Files\audio</Filter>
+    </None>
+    <None Include="res\audio\hat.ogg">
+      <Filter>Resource Files\audio</Filter>
+    </None>
+    <None Include="res\audio\upClick.ogg">
+      <Filter>Resource Files\audio</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Headers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PlatformerClone.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\3D\geometry\vector3d.hpp">
+      <Filter>Header Files\3D\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="include\3D\geometry\solid3d.hpp">
+      <Filter>Header Files\3D\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="include\3D\geometry\segment3d.hpp">
+      <Filter>Header Files\3D\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="include\3D\geometry\plane3d.hpp">
+      <Filter>Header Files\3D\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="include\3D\geometry\geometry.hpp">
+      <Filter>Header Files\3D\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="include\3D\geometry\camera3d.hpp">
+      <Filter>Header Files\3D\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="include\3D\utils\tools.hpp">
+      <Filter>Header Files\3D\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="include\3D\utils\parameters.hpp">
+      <Filter>Header Files\3D\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="include\3D\utils\mouse.hpp">
+      <Filter>Header Files\3D\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="include\3D\utils\looptimer.hpp">
+      <Filter>Header Files\3D\utils</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="res\audio\downClick.wav">
+      <Filter>Resource Files\audio</Filter>
+    </Media>
+    <Media Include="res\audio\hat.wav">
+      <Filter>Resource Files\audio</Filter>
+    </Media>
+    <Media Include="res\audio\tap.wav">
+      <Filter>Resource Files\audio</Filter>
+    </Media>
+    <Media Include="res\audio\upClick.wav">
+      <Filter>Resource Files\audio</Filter>
+    </Media>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\sprites\enemyBlack2.png">
+      <Filter>Resource Files\sprites</Filter>
+    </Image>
+    <Image Include="res\sprites\laserBlue03.png">
+      <Filter>Resource Files\sprites</Filter>
+    </Image>
+    <Image Include="res\sprites\laserRed04.png">
+      <Filter>Resource Files\sprites</Filter>
+    </Image>
+    <Image Include="res\sprites\playerShip1_blue.png">
+      <Filter>Resource Files\sprites</Filter>
+    </Image>
+    <Image Include="res\sprites\RoundedRect.png">
+      <Filter>Resource Files\sprites</Filter>
+    </Image>
+    <Image Include="res\sprites\Space-Background-Tiled.bmp">
+      <Filter>Resource Files\sprites</Filter>
+    </Image>
+    <Image Include="res\sprites\sonicSpriteSheet.png">
+      <Filter>Resource Files\sprites</Filter>
+    </Image>
+    <Image Include="res\sprites\sonicSprite.png">
+      <Filter>Resource Files\sprites</Filter>
+    </Image>
+    <Image Include="res\sprites\map.png">
+      <Filter>Resource Files\sprites</Filter>
+    </Image>
+    <Image Include="res\sprites\map1.png">
+      <Filter>Resource Files\sprites</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="res\sprites\pix.ttf">
+      <Filter>Resource Files\sprites</Filter>
+    </Font>
+  </ItemGroup>
+</Project>
