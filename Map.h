@@ -3,11 +3,24 @@
 #pragma once
 
 class Entity;
+class Player;
 
 enum class CollisionDirection : int {
 	none = 0, top = 1, bottom = 2, left = 3, right = 4
 };
 
+// block class inheriting from the shape class to not replace a lot of code
+class Block : public sf::RectangleShape
+{
+public:
+	// current distance to the player
+	int distanceToPlayer;
+	// for bulk updates
+	void updatePlayerDistance(sf::RectangleShape shape);
+
+	inline bool operator<(Block other);
+	inline bool operator>(Block other);
+};
 
 class Map
 {
@@ -15,7 +28,7 @@ public:
 	// image holding map information
 	sf::Image mapImage;
 	// vector holding all the blocks to render
-	std::vector<sf::RectangleShape*> map;
+	std::vector<Block*> map;
 	// vector holding possible enemies/entities
 	std::vector<Entity*> *entities;
 	// pointer to the render window for debug purposes
@@ -23,6 +36,8 @@ public:
 
 	// function to read from the passed image and construct the map vector
 	void render();
+	// update all the block's distance to the player
+	void updateBlocks(Player player);
 
 	// collision detection past the basic sfml intersect function
 	CollisionDirection checkCollisionDirection(sf::RectangleShape r1, sf::RectangleShape r2, bool debug = true);

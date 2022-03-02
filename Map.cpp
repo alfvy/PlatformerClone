@@ -1,6 +1,24 @@
 #include "Map.h"
 #include "Entity.h"
 
+void Block::updatePlayerDistance(sf::RectangleShape shape)
+{
+	this->distanceToPlayer = util::distanceToCenter(shape.getGlobalBounds(), this->getGlobalBounds());
+}
+
+// for std::sort
+bool Block::operator<(Block other)
+{
+	return this->distanceToPlayer < other.distanceToPlayer;
+}
+
+// for std::sort
+bool Block::operator>(Block other)
+{
+	return this->distanceToPlayer > other.distanceToPlayer;
+}
+
+// class initializer
 Map::Map(sf::Image image, sf::RenderWindow *window)
 {
 	this->window = window;
@@ -8,39 +26,44 @@ Map::Map(sf::Image image, sf::RenderWindow *window)
 	this->entities = new std::vector<Entity*>;
 }
 
+// rendering is another word for reading the info of each pixel and creating a
+// new object of the corrisponding location
 void Map::render()
 {
 	for (int i = 0; i < this->mapImage.getSize().x; i++)
 	{
 		for (int j = 0; j < this->mapImage.getSize().y; j++)
 		{
-			if (mapImage.getPixel(i, j) == sf::Color::White)
-			{
-				sf::RectangleShape* newRect = new sf::RectangleShape;
-				newRect->setPosition(i * GAME_SCALE, j * GAME_SCALE);
-				newRect->setSize(sf::Vector2f(GAME_SCALE, GAME_SCALE));
-				newRect->setFillColor(sf::Color::Transparent);
-				map.push_back(newRect);
-			}
+			//if (mapImage.getPixel(i, j) == sf::Color::White)
+			//{
+			//	sf::RectangleShape* newRect = new sf::RectangleShape;
+			//	newRect->setPosition(i * GAME_SCALE, j * GAME_SCALE);
+			//	newRect->setSize(sf::Vector2f(GAME_SCALE, GAME_SCALE));
+			//	newRect->setFillColor(sf::Color::Transparent);
+			//	map.push_back(newRect);
+			//}
 
+			// black is the default color of the ground
 			if (mapImage.getPixel(i, j) == sf::Color::Black)
 			{
-				sf::RectangleShape* newRect = new sf::RectangleShape;
+				Block* newRect = new Block;
 				newRect->setPosition(i * GAME_SCALE, j * GAME_SCALE);
 				newRect->setSize(sf::Vector2f(GAME_SCALE, GAME_SCALE));
 				newRect->setFillColor(sf::Color::Black);
 				map.push_back(newRect);
 			}
 
+			// block for testing color accuracy
 			if (mapImage.getPixel(i, j) == sf::Color(255, 255, 95))
 			{
-				sf::RectangleShape* newRect = new sf::RectangleShape;
+				Block* newRect = new Block;
 				newRect->setPosition(i * GAME_SCALE, j * GAME_SCALE);
 				newRect->setSize(sf::Vector2f(GAME_SCALE, GAME_SCALE));
 				newRect->setFillColor(sf::Color(255, 255, 95));
 				map.push_back(newRect);
 			}
 
+			// red pixels are kept for enemies or dynamic entites other than the player
 			if (mapImage.getPixel(i, j) == sf::Color::Red)
 			{
 				Entity* newEntity = new Entity;
@@ -57,8 +80,10 @@ void Map::render()
 	}
 }
 
+// to check the direction of the player
 CollisionDirection Map::checkCollisionDirection(sf::RectangleShape r1, sf::RectangleShape r2, bool debug)
 {
+	// this just fucking works, took me like 6 hours
 	CollisionDirection overlap = CollisionDirection::none;
 
 	if (r1.getGlobalBounds().intersects(r2.getGlobalBounds())) {
@@ -135,6 +160,14 @@ CollisionDirection Map::checkCollisionDirection(sf::RectangleShape r1, sf::Recta
 	}
 
 	return overlap;
+}
+
+void Map::updateBlocks(Player player)
+{
+	for (Block* block : this->map)
+	{
+		block->updatePlayerDistance(player.rect);
+	}
 }
 
 Map::~Map()
