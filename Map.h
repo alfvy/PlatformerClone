@@ -18,8 +18,8 @@ public:
 	// for bulk updates
 	void updatePlayerDistance(sf::RectangleShape shape);
 
-	inline bool operator<(Block other);
-	inline bool operator>(Block other);
+	bool operator<(Block *other) const;
+	bool operator>(const Block& other) const;
 };
 
 class Map

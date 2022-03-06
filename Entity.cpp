@@ -41,7 +41,7 @@ void Player::draw(sf::RenderWindow* window)
     window->draw(this->rect);
 }
 
-void Entity::physicsUpdate(float deltaTime, Map map, bool debug)
+void Entity::physicsUpdate(float deltaTime, Map *map, bool debug)
 {
     // if the object is not alive stop all computations
     if (!alive) return;
@@ -53,7 +53,7 @@ void Entity::physicsUpdate(float deltaTime, Map map, bool debug)
     bool toTop = false;
 
     // checking every block in the map
-    for (sf::RectangleShape* block : map.map)
+    for (sf::RectangleShape* block : map->map)
     {
         // with the color black
         if (block->getFillColor() == sf::Color::Black)
@@ -61,79 +61,95 @@ void Entity::physicsUpdate(float deltaTime, Map map, bool debug)
             /*onGround = playerColRect.intersects(block->getGlobalBounds());
             if (onGround) break;*/
 
-            if (map.checkCollisionDirection(this->rect, *block, debug) == CollisionDirection::top)
+            /*switch (map->checkCollisionDirection(this->rect, *block, debug))
             {
-                // if the entity is colliding with the top of another object
+            case CollisionDirection::top:
                 onGround = true;
-            }
+                break;
+            case CollisionDirection::left:
+                toLeft = true;
+                break;
+            case CollisionDirection::right:
+                toRight = true;
+                break;
+            case CollisionDirection::bottom:
+                toTop = true;
+                break;
+            }*/
 
-            if (map.checkCollisionDirection(this->rect, *block, debug) == CollisionDirection::left)
+            //if (map->checkCollisionDirection(this->rect, *block, debug) == CollisionDirection::top)
+            //{
+            //    // if the entity is colliding with the top of another object
+            //    onGround = true;
+            //}
+
+            if (map->checkCollisionDirection(this->rect, *block, debug) == CollisionDirection::left)
             {
                 // if the entity is colliding with the right of another object
                 toLeft = true;
             }
 
-            if (map.checkCollisionDirection(this->rect, *block, debug) == CollisionDirection::right)
+            if (map->checkCollisionDirection(this->rect, *block, debug) == CollisionDirection::right)
             {
                 // if the entity is colliding with the right of another object
                 toRight = true;
             }
 
-            if (map.checkCollisionDirection(this->rect, *block, debug) == CollisionDirection::bottom)
-            {
-                // if the entity is colliding with the right of another object
-                toTop = true;
-            }
+            //if (map->checkCollisionDirection(this->rect, *block, debug) == CollisionDirection::bottom)
+            //{
+            //    // if the entity is colliding with the right of another object
+            //    toTop = true;
+            //}
 
             if ((onGround && toLeft) || (onGround && toRight)) { break; }
         }
     }
 
-// if we hit our head buckle and stop all upwards momentum
-if (toTop)
-{
-    this->rect.move(0, 1);
-    this->vel.y = 0;
+    // if we hit our head buckle and stop all upwards momentum
+    //if (toTop)
+    //{
+    //    this->rect.move(0, 1);
+    //    this->vel.y = 0;
+    //}
+
+    //// if we're on the ground we stop "falling"
+    //if (onGround)
+    //{
+    //    this->vel.y = 0;
+    //}
+    //else if (!onGround)// if we're in the air "fall"
+    //{
+    //    this->vel.y += gravity * deltaTime;
+    //}
+
+    // if the entity is on the ground with direction right
+    if (direction)
+    {
+        this->vel.x = this->speed * deltaTime;
+    }
+    else if (!direction) // if the entity is on the ground with direction left
+    {
+        this->vel.x = -this->speed * deltaTime;
+
+    }
+
+    // flipping the direction of the object only when colliding with the opposite direction
+    if (toLeft)
+    {
+        direction = false;
+    }
+    if (toRight)
+    {
+        direction = true;
+    }
+
+    // move the entity based on the accumilated velocity
+    // either through automated controls or the "falling"
+    this->rect.move(this->vel);
+    this->vel.x = 0;
 }
 
-// if we're on the ground we stop "falling"
-if (onGround)
-{
-    this->vel.y = 0;
-}
-else if (!onGround)// if we're in the air "fall"
-{
-    this->vel.y += gravity * deltaTime;
-}
-
-// if the entity is on the ground with direction right
-if (onGround && direction)
-{
-    this->vel.x = this->speed * deltaTime;
-}
-else if (onGround && !direction) // if the entity is on the ground with direction left
-{
-    this->vel.x = -this->speed * deltaTime;
-
-}
-
-// flipping the direction of the object only when colliding with the opposite direction
-if (toLeft)
-{
-    direction = false;
-}
-if (toRight)
-{
-    direction = true;
-}
-
-// move the entity based on the accumilated velocity
-// either through automated controls or the "falling"
-this->rect.move(this->vel);
-this->vel.x = 0;
-}
-
-void Player::physicsUpdate(float deltaTime, Map map, bool debug)
+void Player::physicsUpdate(float deltaTime, Map *map, bool debug)
 {
     // if the object is not alive stop all computations
     if (!alive) return;
@@ -153,35 +169,38 @@ void Player::physicsUpdate(float deltaTime, Map map, bool debug)
     sf::RectangleShape rightCollision;
 
     // checking every block in the map
-    for (sf::RectangleShape* block : map.map)
+    //for (sf::RectangleShape* block : map->map)
+    for(int i = 0; i < 10; i++)
     {
+        auto block = map->map[i];
+
         if (block->getFillColor() == sf::Color::Black)
         {
             /*onGround = playerColRect.intersects(block->getGlobalBounds());
             if (onGround) break;*/
 
-            if (map.checkCollisionDirection(this->rect, *block, debug) == CollisionDirection::top)
+            if (map->checkCollisionDirection(this->rect, *block, debug) == CollisionDirection::top)
             {
                 // if the player is colliding with the top of another object
                 onGround = true;
                 topCollision = *block;
             }
 
-            if (map.checkCollisionDirection(this->rect, *block, debug) == CollisionDirection::left)
+            if (map->checkCollisionDirection(this->rect, *block, debug) == CollisionDirection::left)
             {
                 // if the entity is colliding with the right of another object
                 toLeft = true;
                 leftCollision = *block;
             }
 
-            if (map.checkCollisionDirection(this->rect, *block, debug) == CollisionDirection::right)
+            if (map->checkCollisionDirection(this->rect, *block, debug) == CollisionDirection::right)
             {
                 // if the entity is colliding with the left of another object
                 toRight = true;
                 rightCollision = *block;
             }
 
-            if (map.checkCollisionDirection(this->rect, *block, debug) == CollisionDirection::bottom)
+            if (map->checkCollisionDirection(this->rect, *block, debug) == CollisionDirection::bottom)
             {
                 // if the entity is colliding with the bottom of another object
                 toTop = true;
@@ -189,11 +208,21 @@ void Player::physicsUpdate(float deltaTime, Map map, bool debug)
             }
 
             // if we're colliding with the ground and an object to the left or to the right stop the collision check
-            if ((onGround && toLeft) || (onGround && toRight)) { break; }
+            if ((onGround && toLeft) || (onGround && toRight) || onGround) { break; }
         }
     }
 
     // shitty basics physics
+
+    for (uint8_t i = 0; i < 4; i++)
+    {
+        int dist = util::distanceToCenter(this->rect.getGlobalBounds(), map->map[i]->getGlobalBounds());
+        if (dist < this->rect.getGlobalBounds().height * 0.8f)
+        {
+            this->rect.move(0, -this->rect.getGlobalBounds().height * 0.2f);
+            //std::cout << dist << " ";
+        }
+    }
 
     if (toTop)
     {

@@ -7,13 +7,13 @@ void Block::updatePlayerDistance(sf::RectangleShape shape)
 }
 
 // for std::sort
-bool Block::operator<(Block other)
+bool Block::operator<(Block *other) const
 {
-	return this->distanceToPlayer < other.distanceToPlayer;
+	return this->distanceToPlayer < other->distanceToPlayer;
 }
 
 // for std::sort
-bool Block::operator>(Block other)
+bool Block::operator>(const Block& other) const
 {
 	return this->distanceToPlayer > other.distanceToPlayer;
 }
@@ -30,9 +30,9 @@ Map::Map(sf::Image image, sf::RenderWindow *window)
 // new object of the corrisponding location
 void Map::render()
 {
-	for (int i = 0; i < this->mapImage.getSize().x; i++)
+	for (unsigned int i = 0; i < this->mapImage.getSize().x; i++)
 	{
-		for (int j = 0; j < this->mapImage.getSize().y; j++)
+		for (unsigned int j = 0; j < this->mapImage.getSize().y; j++)
 		{
 			//if (mapImage.getPixel(i, j) == sf::Color::White)
 			//{

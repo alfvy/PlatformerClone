@@ -15,20 +15,21 @@ sf::Vector2f viewPosition(0, 0);
 Player player;
 
 // where we do all the physics calculations, where everything is closley related to delta time
-void physicsUpdate(float deltaTime, Map map, sf::RenderWindow *window)
+void physicsUpdate(float deltaTime, Map *map, sf::RenderWindow *window)
 {
     auto start = std::chrono::system_clock::now();
 
-    map.updateBlocks(player);
+    //map->updateBlocks(player);
 
     // this is sorting the map blocks vector based on their distance to the player
     // remove std::greater<Block*>() to make it sort based on smaller
-    std::sort(map.map.begin(), map.map.end(), std::greater<Block*>());
+    if (! std::is_sorted(map->map.begin(), map->map.end()) );
+        std::sort(map->map.begin(), map->map.end(), &Block::operator<);
 
     player.physicsUpdate(deltaTime, map, true);
 
     // testing player collisions with all the entities on the map
-    for (Entity* entity : *map.entities)
+    for (Entity* entity : *map->entities)
     {
         if (entity->alive)
         {
@@ -40,7 +41,7 @@ void physicsUpdate(float deltaTime, Map map, sf::RenderWindow *window)
             }
             else { entity->rect.setFillColor(sf::Color::Red); }
 
-            if (map.checkCollisionDirection(player.rect, entity->rect) == CollisionDirection::top)
+            if (map->checkCollisionDirection(player.rect, entity->rect) == CollisionDirection::top)
             {
                 entity->alive = false;
             }
@@ -59,7 +60,7 @@ void physicsUpdate(float deltaTime, Map map, sf::RenderWindow *window)
 }
 
 // where we draw everything
-void draw(sf::RenderWindow *window, sf::View *viewPort, Map map, float deltaTime)
+void draw(sf::RenderWindow *window, sf::View *viewPort, Map *map, float deltaTime)
 {
     // moving the view port based on the player's position
     viewPosition.x = player.rect.getPosition().x - (window->getSize().x * 0.5f);
@@ -69,7 +70,7 @@ void draw(sf::RenderWindow *window, sf::View *viewPort, Map map, float deltaTime
     viewPort->reset(sf::FloatRect(viewPosition.x, viewPosition.y, 700, 700));
 
     // drawing every block on the map
-    for (sf::RectangleShape* block : map.map)
+    for (sf::RectangleShape* block : map->map)
     {
         window->draw(*block);
     }
@@ -115,7 +116,7 @@ int main()
 
     // the image we use to extrapolate map data
     sf::Image mapImage;
-    mapImage.loadFromFile("res\\sprites\\map1.png");
+    mapImage.loadFromFile("res\\sprites\\map2.png");
 
     // intitializing the map with the map image
     Map map(mapImage, &window);
@@ -152,9 +153,11 @@ int main()
 
         window.clear(sf::Color(255, 255, 255));
         
-        physicsUpdate(deltaTime, map, &window);
+        map.updateBlocks(player);
 
-        draw(&window, &viewPort, map, deltaTime);
+        physicsUpdate(deltaTime, &map, &window);
+
+        draw(&window, &viewPort, &map, deltaTime);
         window.draw(frameRate);
         window.display();
     }
@@ -197,18 +200,19 @@ int mainTest()
         clock.restart();
 
         map.updateBlocks(player);
+        std::sort(map.map.begin(), map.map.end(), &(Block::operator<));
 
         window.clear(sf::Color(255, 255, 255));
 
-        physicsUpdate(deltaTime, map, &window);
+        physicsUpdate(deltaTime, &map, &window);
 
         window.draw(player.rect);
 
         for (Block* block : map.map)
         {
             window.draw(*block);
-
         }
+
         window.display();
     }
 

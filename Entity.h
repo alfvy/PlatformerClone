@@ -23,7 +23,7 @@ public:
 	// drawing the actual object using a refrence to the window
 	void draw(sf::RenderWindow* window);
 	// all the actual calculations that are needed to make the entity functions
-	void physicsUpdate(float deltaTime, Map map, bool debug);
+	void physicsUpdate(float deltaTime, Map *map, bool debug);
 
 	Entity(int x, int y, int width, int height, sf::Color color, float speed);
 	Entity();
@@ -35,7 +35,7 @@ class Player : public Entity
 public:
 	Player(int x, int y, int width, int height, sf::Color color, float speed);
 	void draw(sf::RenderWindow* window);
-	void physicsUpdate(float deltaTime, Map map, bool debug);
+	void physicsUpdate(float deltaTime, Map *map, bool debug);
 	Player();
 	~Player();
 };

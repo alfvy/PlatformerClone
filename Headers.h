@@ -24,7 +24,7 @@ static class util
 {
 public:
 	// to calculate the distance between the center of 2 objects
-	static int distanceToCenter(sf::FloatRect obj1, sf::FloatRect obj2)
+	static unsigned int distanceToCenter(sf::FloatRect obj1, sf::FloatRect obj2)
 	{
 		float x1, x2, y1, y2, w1, w2, h1, h2, c1x, c1y, c2x, c2y, distance;
 
